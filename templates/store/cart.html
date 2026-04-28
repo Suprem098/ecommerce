@@ -1,0 +1,43 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Cart - E-Shop{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Shopping Cart</h1>
+{% if cart_items %}
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>
+                {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                {% endif %}
+                <strong>{{ item.product.name }}</strong>
+            </td>
+            <td>{{ item.qty }}</td>
+            <td>${{ item.product.price }}</td>
+            <td class="fw-bold">${{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="text-end mb-4">
+    <h3>Total: ${{ total }}</h3>
+    <a href="{% url 'checkout' %}" class="btn btn-success btn-lg">Proceed to Checkout</a>
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="bi bi-cart-x"></i> Your cart is empty. <a href="{% url 'product_list' %}">Continue shopping</a>
+</div>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends 'store/base.html' %}
+
+{% block title %}{{ product.name }} - E-Shop{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" class="img-fluid rounded shadow" alt="{{ product.name }}">
+        {% else %}
+        <div class="bg-light d-flex align-items-center justify-content-center rounded shadow" style="height: 400px;">
+            <i class="bi bi-image text-muted" style="font-size: 6rem;"></i>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h1 class="mb-3">{{ product.name }}</h1>
+        <p class="lead text-success fs-2 fw-bold mb-4">${{ product.price }}</p>
+        <p class="text-muted">{{ product.description }}</p>
+        <div class="mb-4">
+            <a href="{% url 'add_to_cart' product.slug %}" class="btn btn-success btn-lg me-2">
+                <i class="bi bi-cart-plus"></i> Add to Cart
+            </a>
+            <a href="{% url 'product_list' %}" class="btn btn-outline-secondary">Back to Products</a>
+        </div>
+        <hr>
+        <small class="text-muted">Added {{ product.created_at|date:"M d, Y" }}</small>
+    </div>
+</div>
+{% endblock %}
+
